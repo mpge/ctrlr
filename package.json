@@ -27,6 +27,7 @@
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
     "format": "biome format --write .",
+    "smoke": "node scripts/cli-smoke.mjs",
     "clean": "pnpm -r exec rimraf dist .turbo node_modules/.cache",
     "ctrlr": "pnpm --filter @ctrlr/cli exec ctrlr"
   },

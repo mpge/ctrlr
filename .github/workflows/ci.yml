@@ -58,3 +58,7 @@ jobs:
       - run: pnpm build
       - run: pnpm typecheck
       - run: pnpm test
+      # End-to-end CLI smoke against the actual built binary — catches
+      # regressions in module wiring (broken exports, ESM/CJS interop, IPC
+      # path resolution) that the unit tests don't cover.
+      - run: pnpm smoke

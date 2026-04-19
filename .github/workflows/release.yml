@@ -6,28 +6,68 @@ on:
       - "v*"
 
 jobs:
-  publish:
-    name: Publish to npm
+  release:
+    name: Build, smoke, release
     runs-on: ubuntu-latest
     permissions:
       contents: write
       id-token: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
       - name: Install Linux build deps
         run: |
           sudo apt-get update
           sudo apt-get install -y libudev-dev libusb-1.0-0-dev build-essential
+
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: pnpm
           registry-url: https://registry.npmjs.org
+
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
       - run: pnpm test
-      - name: Publish packages
+      - run: pnpm smoke
+
+      # ---------- GitHub Release ----------
+      # Always cut a GitHub Release for the pushed tag so users can `gh release
+      # download v0.1.0` even if npm publishing isn't configured yet. The body
+      # is auto-generated from commits since the previous tag.
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          tag="${GITHUB_REF#refs/tags/}"
+          if gh release view "$tag" >/dev/null 2>&1; then
+            echo "Release $tag already exists; skipping create."
+          else
+            gh release create "$tag" --generate-notes --title "$tag"
+          fi
+
+      # ---------- npm publish (optional) ----------
+      # Only fires when NPM_TOKEN is configured. Until then this step is a
+      # graceful no-op so a freshly-cloned repo can still cut releases.
+      - name: Check for NPM_TOKEN
+        id: npm_token
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          if [ -n "${NPM_TOKEN}" ]; then
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::NPM_TOKEN is not set; skipping npm publish."
+          fi
+
+      - name: Publish packages to npm
+        if: steps.npm_token.outputs.configured == 'true'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: pnpm -r --filter "./packages/**" --filter "./apps/**" publish --access public --no-git-checks
+        run: |
+          pnpm -r --filter "./packages/**" --filter "./apps/**" \
+            publish --access public --no-git-checks
