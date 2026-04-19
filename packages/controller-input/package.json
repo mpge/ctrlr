@@ -1,0 +1,38 @@
+{
+  "name": "@ctrlr/controller-input",
+  "version": "0.1.0",
+  "description": "Cross-platform USB game controller detection and event normalization for Ctrlr.",
+  "license": "MIT",
+  "author": "mpge",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mpge/ctrlr.git",
+    "directory": "packages/controller-input"
+  },
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": ["dist", "README.md"],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@ctrlr/types": "workspace:*",
+    "node-hid": "^3.1.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.5",
+    "tsup": "^8.3.0",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.2"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "name": "@ctrlr/types",
+  "version": "0.1.0",
+  "description": "Shared TypeScript types for the Ctrlr platform.",
+  "license": "MIT",
+  "author": "mpge",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mpge/ctrlr.git",
+    "directory": "packages/types"
+  },
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": ["dist", "README.md"],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "tsup": "^8.3.0",
+    "typescript": "^5.6.3"
+  }
+}

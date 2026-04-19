@@ -1,0 +1,44 @@
+{
+  "name": "ctrlr-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Control your AI agents like a game controller.",
+  "license": "MIT",
+  "author": "mpge",
+  "homepage": "https://github.com/mpge/ctrlr",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mpge/ctrlr.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mpge/ctrlr/issues"
+  },
+  "packageManager": "pnpm@9.12.0",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "build": "pnpm -r --filter \"./packages/**\" run build && pnpm -r --filter \"./apps/**\" run build",
+    "dev": "pnpm -r --parallel run dev",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "pnpm -r run typecheck",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "format": "biome format --write .",
+    "clean": "pnpm -r exec rimraf dist .turbo node_modules/.cache",
+    "ctrlr": "pnpm --filter @ctrlr/cli exec ctrlr"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@types/node": "^22.7.5",
+    "rimraf": "^6.0.1",
+    "tsup": "^8.3.0",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.2"
+  }
+}
