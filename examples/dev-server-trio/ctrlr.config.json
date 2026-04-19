@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "agents": [
+    { "id": "api", "label": "API",  "command": "npm", "args": ["run", "dev"], "cwd": "./apps/api", "accent": "pink" },
+    { "id": "web", "label": "Web",  "command": "npm", "args": ["run", "dev"], "cwd": "./apps/web", "accent": "cyan" },
+    { "id": "db",  "label": "DB",   "command": "docker", "args": ["compose", "up"], "accent": "amber" }
+  ],
+  "bindings": "./ctrlr.bindings.json"
+}

@@ -1,0 +1,139 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/mpge/ctrlr/raw/main/schema/ctrlr.bindings.schema.json",
+  "title": "Ctrlr bindings",
+  "description": "Maps controller buttons / sticks / triggers to engine actions.",
+  "type": "object",
+  "required": ["version", "buttons"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "version": { "const": 1 },
+    "name": { "type": "string" },
+    "buttons": {
+      "type": "object",
+      "additionalProperties": false,
+      "patternProperties": {
+        "^(A|B|X|Y|LB|RB|LT|RT|BACK|START|GUIDE|LSB|RSB|DPAD_(UP|DOWN|LEFT|RIGHT))$": {
+          "type": "object",
+          "required": ["action"],
+          "properties": {
+            "label": { "type": "string" },
+            "action": { "$ref": "#/definitions/action" }
+          }
+        }
+      }
+    },
+    "sticks": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "left": { "$ref": "#/definitions/stickBinding" },
+        "right": { "$ref": "#/definitions/stickBinding" }
+      }
+    },
+    "triggers": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "LT": {
+          "type": "object",
+          "required": ["action"],
+          "properties": { "action": { "$ref": "#/definitions/action" } }
+        },
+        "RT": {
+          "type": "object",
+          "required": ["action"],
+          "properties": { "action": { "$ref": "#/definitions/action" } }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "target": {
+      "oneOf": [
+        { "type": "object", "required": ["mode"], "properties": { "mode": { "const": "focused" } } },
+        {
+          "type": "object",
+          "required": ["mode", "agent"],
+          "properties": { "mode": { "const": "agent" }, "agent": { "type": "string" } }
+        },
+        { "type": "object", "required": ["mode"], "properties": { "mode": { "const": "all" } } }
+      ]
+    },
+    "action": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["kind", "target", "text"],
+          "properties": {
+            "kind": { "const": "send" },
+            "target": { "$ref": "#/definitions/target" },
+            "text": { "type": "string" },
+            "appendNewline": { "type": "boolean" }
+          }
+        },
+        {
+          "type": "object",
+          "required": ["kind", "target"],
+          "properties": {
+            "kind": { "const": "interrupt" },
+            "target": { "$ref": "#/definitions/target" }
+          }
+        },
+        {
+          "type": "object",
+          "required": ["kind", "target"],
+          "properties": {
+            "kind": { "const": "restart" },
+            "target": { "$ref": "#/definitions/target" }
+          }
+        },
+        {
+          "type": "object",
+          "required": ["kind", "agent"],
+          "properties": { "kind": { "const": "focus" }, "agent": { "type": "string" } }
+        },
+        {
+          "type": "object",
+          "required": ["kind", "direction"],
+          "properties": {
+            "kind": { "const": "cycle_focus" },
+            "direction": { "enum": ["next", "prev"] }
+          }
+        },
+        {
+          "type": "object",
+          "required": ["kind", "text"],
+          "properties": {
+            "kind": { "const": "broadcast" },
+            "text": { "type": "string" },
+            "appendNewline": { "type": "boolean" }
+          }
+        },
+        { "type": "object", "required": ["kind"], "properties": { "kind": { "const": "stop_all" } } },
+        {
+          "type": "object",
+          "required": ["kind", "agent"],
+          "properties": { "kind": { "const": "spawn" }, "agent": { "type": "string" } }
+        },
+        {
+          "type": "object",
+          "required": ["kind", "agent"],
+          "properties": { "kind": { "const": "kill" }, "agent": { "type": "string" } }
+        },
+        { "type": "object", "required": ["kind"], "properties": { "kind": { "const": "noop" } } }
+      ]
+    },
+    "stickBinding": {
+      "type": "object",
+      "required": ["axis", "positive", "negative"],
+      "properties": {
+        "axis": { "enum": ["x", "y"] },
+        "threshold": { "type": "number", "minimum": 0, "maximum": 1 },
+        "positive": { "$ref": "#/definitions/action" },
+        "negative": { "$ref": "#/definitions/action" }
+      }
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "agents": [
+    {
+      "id": "pane-1",
+      "label": "Claude · Backend",
+      "command": "claude",
+      "args": [],
+      "cwd": "./apps/api",
+      "accent": "pink"
+    },
+    {
+      "id": "pane-2",
+      "label": "Claude · Frontend",
+      "command": "claude",
+      "args": [],
+      "cwd": "./apps/web",
+      "accent": "cyan"
+    },
+    {
+      "id": "pane-3",
+      "label": "Claude · Tests",
+      "command": "claude",
+      "args": [],
+      "cwd": "./packages/tests",
+      "accent": "amber"
+    },
+    {
+      "id": "pane-4",
+      "label": "Claude · Docs",
+      "command": "claude",
+      "args": [],
+      "cwd": "./docs",
+      "accent": "green"
+    }
+  ],
+  "bindings": "./ctrlr.bindings.json"
+}
