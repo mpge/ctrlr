@@ -1,9 +1,21 @@
-// `@xterm/headless` is published as CommonJS, so its named exports aren't
-// reachable via the ESM `import { Terminal }` form on Node. We bring in the
-// default export (the whole module record) and destructure at runtime.
-import xterm from '@xterm/headless';
+// `@xterm/headless` is published as CommonJS, so the ESM
+// `import { Terminal } from '@xterm/headless'` form throws at runtime on Node
+// ("does not provide an export named 'Terminal'"). We use `createRequire` to
+// load the module record at runtime, and a type-only namespace import for the
+// typings — the two don't share a runtime relationship.
+import { createRequire } from 'node:module';
+import type {
+  ITerminalInitOnlyOptions,
+  ITerminalOptions,
+  Terminal as TerminalInstance,
+} from '@xterm/headless';
 
-const { Terminal } = xterm as unknown as { Terminal: typeof import('@xterm/headless').Terminal };
+interface TerminalCtor {
+  new (options?: ITerminalOptions & ITerminalInitOnlyOptions): TerminalInstance;
+}
+
+const cjsXterm = createRequire(import.meta.url)('@xterm/headless') as { Terminal: TerminalCtor };
+const { Terminal } = cjsXterm;
 
 /**
  * One xterm-headless instance per pane. We feed PTY bytes in via `write` and
@@ -16,7 +28,7 @@ const { Terminal } = xterm as unknown as { Terminal: typeof import('@xterm/headl
  * faithfully render anything a real terminal would.
  */
 export class VirtualScreen {
-  private terminal: Terminal;
+  private terminal: TerminalInstance;
 
   constructor(cols: number, rows: number) {
     this.terminal = new Terminal({

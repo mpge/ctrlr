@@ -18,7 +18,10 @@ describe('loadBindings', () => {
   it('falls back to defaults when no config file is present', async () => {
     tmpDir = await mkdtemp(path.join(os.tmpdir(), 'ctrlr-bind-'));
     const env = process.env;
-    const cloned = { ...env, HOME: tmpDir };
+    // The annotation is required: spreading `process.env` narrows the result to
+    // the literal `{ HOME: string }` on stricter TS configurations, which then
+    // rejects the `delete` calls below.
+    const cloned: NodeJS.ProcessEnv = { ...env, HOME: tmpDir };
     // Removing rather than setting to undefined so the keys actually leave the
     // env — `process.env` ignores `undefined` assignments.
     // biome-ignore lint/performance/noDelete: see comment above
