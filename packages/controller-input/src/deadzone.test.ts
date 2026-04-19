@@ -24,8 +24,12 @@ describe('normalizeAxisI8', () => {
     expect(normalizeAxisI8(128, 0)).toBe(0);
   });
 
-  it('maps 0 (full left) to about -1', () => {
-    expect(normalizeAxisI8(0, 0)).toBeCloseTo(-128 / 127, 5);
+  it('maps 0 (full left) to exactly -1', () => {
+    expect(normalizeAxisI8(0, 0)).toBe(-1);
+  });
+
+  it('maps 255 (full right) to exactly 1', () => {
+    expect(normalizeAxisI8(255, 0)).toBe(1);
   });
 
   it('respects deadzone', () => {

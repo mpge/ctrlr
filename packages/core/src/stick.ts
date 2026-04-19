@@ -31,7 +31,9 @@ export class StickEdgeDetector {
       return 'neutral';
     }
     if (now - this.lastFireMs[stick] < cooldownMs) {
-      this.state[stick] = next;
+      // Cooldown still in effect: drop the event without advancing state, so
+      // the next sample (once cooldown expires) still sees this as a fresh
+      // crossing and fires.
       return 'neutral';
     }
     this.state[stick] = next;

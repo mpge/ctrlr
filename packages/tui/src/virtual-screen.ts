@@ -1,4 +1,9 @@
-import { Terminal } from '@xterm/headless';
+// `@xterm/headless` is published as CommonJS, so its named exports aren't
+// reachable via the ESM `import { Terminal }` form on Node. We bring in the
+// default export (the whole module record) and destructure at runtime.
+import xterm from '@xterm/headless';
+
+const { Terminal } = xterm as unknown as { Terminal: typeof import('@xterm/headless').Terminal };
 
 /**
  * One xterm-headless instance per pane. We feed PTY bytes in via `write` and

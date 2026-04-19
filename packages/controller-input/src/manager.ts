@@ -128,13 +128,14 @@ export class ControllerManager extends EventEmitter {
     return this.list();
   }
 
-  /** Type-safe override for tests. */
+  /** Typed event registration for the events this manager emits. */
   override on(event: 'input', listener: (e: ControllerEvent) => void): this;
   override on(event: 'connect', listener: (info: ControllerInfo) => void): this;
   override on(event: 'disconnect', listener: (info: ControllerInfo) => void): this;
   override on(event: 'lifecycle', listener: (e: ConnectionEvent) => void): this;
   override on(event: 'error', listener: (err: Error) => void): this;
-  override on(event: string | symbol, listener: (...args: unknown[]) => void): this {
+  // biome-ignore lint/suspicious/noExplicitAny: matches Node's EventEmitter base signature
+  override on(event: string | symbol, listener: (...args: any[]) => void): this {
     return super.on(event, listener);
   }
 

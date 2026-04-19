@@ -17,7 +17,11 @@ export function applyDeadzone(x: number, y: number, deadzone = 0.15): { x: numbe
 
 export function normalizeAxisI8(byte: number, deadzone = 0.15): number {
   // Many gamepads report sticks as unsigned 8-bit (0..255) centered at 128.
-  const v = (byte - 128) / 127;
+  // The negative half spans 128 values (0..127) and the positive half 127
+  // (129..255), so we divide by the appropriate half-range to keep the output
+  // exactly in [-1, 1] without needing a clamp.
+  const centered = byte - 128;
+  const v = centered < 0 ? centered / 128 : centered / 127;
   return Math.abs(v) < deadzone ? 0 : clamp(v, -1, 1);
 }
 
