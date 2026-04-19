@@ -13,7 +13,11 @@ export function registerControllersCommand(program: Command): void {
       try {
         await mgr.start();
       } catch (err) {
-        console.error(chalk.red('✗'), 'failed to start controller manager:', (err as Error).message);
+        console.error(
+          chalk.red('✗'),
+          'failed to start controller manager:',
+          (err as Error).message,
+        );
         process.exitCode = 1;
         return;
       }

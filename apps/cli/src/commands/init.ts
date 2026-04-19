@@ -45,7 +45,11 @@ export function registerInitCommand(program: Command): void {
       console.log('  ', chalk.green('✓'), 'wrote', chalk.cyan('ctrlr.bindings.json'));
       console.log('');
       console.log(chalk.gray('Next:'));
-      console.log('  ', chalk.bold('ctrlr controllers'), chalk.gray('# verify your gamepad is detected'));
+      console.log(
+        '  ',
+        chalk.bold('ctrlr controllers'),
+        chalk.gray('# verify your gamepad is detected'),
+      );
       console.log('  ', chalk.bold('ctrlr start'), chalk.gray('       # launch the TUI grid'));
     });
 }

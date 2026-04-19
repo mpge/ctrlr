@@ -1,5 +1,5 @@
 import { Box, Text } from 'ink';
-import React from 'react';
+import type React from 'react';
 import type { TuiBindingsHint } from '../render.js';
 
 interface Props {
@@ -32,7 +32,7 @@ export const StatusBar: React.FC<Props> = ({
       </Box>
       <Box flexWrap="wrap">
         {bindingHints.slice(0, 8).map((hint, i) => (
-          <Text key={i}>
+          <Text key={`hint-${i}-${hint.button}`}>
             <Text color="#ffb547" bold>
               {hint.button}
             </Text>

@@ -3,20 +3,61 @@
   "version": 1,
   "name": "Claude quartet",
   "buttons": {
-    "A":     { "label": "pick 1",     "action": { "kind": "send", "target": { "mode": "focused" }, "text": "1", "appendNewline": true } },
-    "B":     { "label": "pick 2",     "action": { "kind": "send", "target": { "mode": "focused" }, "text": "2", "appendNewline": true } },
-    "X":     { "label": "pick 3",     "action": { "kind": "send", "target": { "mode": "focused" }, "text": "3", "appendNewline": true } },
-    "Y":     { "label": "pick 4",     "action": { "kind": "send", "target": { "mode": "focused" }, "text": "4", "appendNewline": true } },
-    "LB":    { "label": "prev pane",  "action": { "kind": "cycle_focus", "direction": "prev" } },
-    "RB":    { "label": "next pane",  "action": { "kind": "cycle_focus", "direction": "next" } },
-    "BACK":  { "label": "interrupt",  "action": { "kind": "interrupt", "target": { "mode": "focused" } } },
-    "START": { "label": "restart",    "action": { "kind": "restart", "target": { "mode": "focused" } } },
-    "GUIDE": { "label": "broadcast clear", "action": { "kind": "broadcast", "text": "clear", "appendNewline": true } },
+    "A": {
+      "label": "pick 1",
+      "action": {
+        "kind": "send",
+        "target": { "mode": "focused" },
+        "text": "1",
+        "appendNewline": true
+      }
+    },
+    "B": {
+      "label": "pick 2",
+      "action": {
+        "kind": "send",
+        "target": { "mode": "focused" },
+        "text": "2",
+        "appendNewline": true
+      }
+    },
+    "X": {
+      "label": "pick 3",
+      "action": {
+        "kind": "send",
+        "target": { "mode": "focused" },
+        "text": "3",
+        "appendNewline": true
+      }
+    },
+    "Y": {
+      "label": "pick 4",
+      "action": {
+        "kind": "send",
+        "target": { "mode": "focused" },
+        "text": "4",
+        "appendNewline": true
+      }
+    },
+    "LB": { "label": "prev pane", "action": { "kind": "cycle_focus", "direction": "prev" } },
+    "RB": { "label": "next pane", "action": { "kind": "cycle_focus", "direction": "next" } },
+    "BACK": {
+      "label": "interrupt",
+      "action": { "kind": "interrupt", "target": { "mode": "focused" } }
+    },
+    "START": {
+      "label": "restart",
+      "action": { "kind": "restart", "target": { "mode": "focused" } }
+    },
+    "GUIDE": {
+      "label": "broadcast clear",
+      "action": { "kind": "broadcast", "text": "clear", "appendNewline": true }
+    },
 
-    "DPAD_UP":    { "label": "Backend",  "action": { "kind": "focus", "agent": "pane-1" } },
+    "DPAD_UP": { "label": "Backend", "action": { "kind": "focus", "agent": "pane-1" } },
     "DPAD_RIGHT": { "label": "Frontend", "action": { "kind": "focus", "agent": "pane-2" } },
-    "DPAD_DOWN":  { "label": "Tests",    "action": { "kind": "focus", "agent": "pane-3" } },
-    "DPAD_LEFT":  { "label": "Docs",     "action": { "kind": "focus", "agent": "pane-4" } }
+    "DPAD_DOWN": { "label": "Tests", "action": { "kind": "focus", "agent": "pane-3" } },
+    "DPAD_LEFT": { "label": "Docs", "action": { "kind": "focus", "agent": "pane-4" } }
   },
   "sticks": {
     "left": {

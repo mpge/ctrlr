@@ -6,12 +6,7 @@
     "useIgnoreFile": true
   },
   "files": {
-    "ignore": [
-      "**/dist/**",
-      "**/node_modules/**",
-      "**/.turbo/**",
-      "**/coverage/**"
-    ]
+    "ignore": ["**/dist/**", "**/node_modules/**", "**/.turbo/**", "**/coverage/**"]
   },
   "formatter": {
     "enabled": true,

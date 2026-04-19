@@ -1,6 +1,6 @@
 import type { ButtonName } from '@ctrlr/types';
 import { normalizeAxisI8 } from '../deadzone.js';
-import { type ControllerParser, emptyState, type ParsedState } from './types.js';
+import { type ControllerParser, type ParsedState, emptyState } from './types.js';
 
 /**
  * DualShock 4 / DualSense USB HID input report (report id 0x01).

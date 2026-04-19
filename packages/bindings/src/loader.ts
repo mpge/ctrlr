@@ -31,9 +31,11 @@ export function userConfigPath(): string | null {
   return path.join(home, 'ctrlr', 'bindings.json');
 }
 
-export async function loadBindings(
-  cwd: string = process.cwd(),
-): Promise<{ config: BindingConfig; source: 'project' | 'user' | 'defaults'; path: string | null }> {
+export async function loadBindings(cwd: string = process.cwd()): Promise<{
+  config: BindingConfig;
+  source: 'project' | 'user' | 'defaults';
+  path: string | null;
+}> {
   const { path: foundPath, source } = resolveBindingsPath(cwd);
   if (!foundPath) {
     return { config: defaultBindings, source: 'defaults', path: null };

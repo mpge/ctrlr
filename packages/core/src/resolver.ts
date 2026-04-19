@@ -1,11 +1,5 @@
-import type {
-  Action,
-  BindingConfig,
-  ButtonEvent,
-  StickEvent,
-  TriggerEvent,
-} from '@ctrlr/types';
-import { StickEdgeDetector } from './stick.js';
+import type { Action, BindingConfig, ButtonEvent, StickEvent, TriggerEvent } from '@ctrlr/types';
+import type { StickEdgeDetector } from './stick.js';
 
 export interface Resolved {
   action: Action;
@@ -35,7 +29,8 @@ export function resolveBindingForEvent(
     const dir = stickDetector.feed(event.stick, cfg.axis, event.x, event.y, threshold);
     if (dir === 'neutral') return null;
     const action = dir === 'positive' ? cfg.positive : cfg.negative;
-    const arrow = cfg.axis === 'x' ? (dir === 'positive' ? '→' : '←') : dir === 'positive' ? '↓' : '↑';
+    const arrow =
+      cfg.axis === 'x' ? (dir === 'positive' ? '→' : '←') : dir === 'positive' ? '↓' : '↑';
     return { action, source: `${event.stick}-stick ${arrow}` };
   }
   if (event.type === 'trigger') {

@@ -16,10 +16,7 @@ export type Action =
   | { kind: 'kill'; agent: string }
   | { kind: 'noop' };
 
-export type ActionTarget =
-  | { mode: 'focused' }
-  | { mode: 'agent'; agent: string }
-  | { mode: 'all' };
+export type ActionTarget = { mode: 'focused' } | { mode: 'agent'; agent: string } | { mode: 'all' };
 
 export type StickAxis = 'x' | 'y';
 

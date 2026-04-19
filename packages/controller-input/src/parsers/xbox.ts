@@ -1,6 +1,6 @@
 import type { ButtonName } from '@ctrlr/types';
 import { normalizeAxisI16LE } from '../deadzone.js';
-import { type ControllerParser, emptyState, type ParsedState } from './types.js';
+import { type ControllerParser, type ParsedState, emptyState } from './types.js';
 
 /**
  * Xbox One / Series controller in HID mode (Bluetooth, or USB on Linux/macOS
@@ -41,9 +41,9 @@ export const xboxParser: ControllerParser = {
 
   matches(vendorId, productId) {
     if (vendorId !== 0x045e) return false;
-    return [
-      0x028e, 0x02d1, 0x02dd, 0x02e3, 0x02ea, 0x02fd, 0x0b00, 0x0b12, 0x0b13,
-    ].includes(productId);
+    return [0x028e, 0x02d1, 0x02dd, 0x02e3, 0x02ea, 0x02fd, 0x0b00, 0x0b12, 0x0b13].includes(
+      productId,
+    );
   },
 
   parse(report) {

@@ -29,9 +29,7 @@ describe('resolveBindingForEvent', () => {
 
   it('returns null when button has no binding', () => {
     const detector = new StickEdgeDetector();
-    expect(
-      resolveBindingForEvent(press('LSB', true), defaultBindings, detector),
-    ).toBeNull();
+    expect(resolveBindingForEvent(press('LSB', true), defaultBindings, detector)).toBeNull();
   });
 
   it('resolves a stick crossing using the binding configuration', () => {

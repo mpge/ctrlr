@@ -222,11 +222,7 @@ class LocalPtyHandle extends EventEmitter implements PaneHandle {
     this.dataDisposer = null;
     this.exitDisposer = null;
     this.process = null;
-    const next: AgentStatus = this.explicitlyKilled
-      ? 'exited'
-      : code === 0
-        ? 'exited'
-        : 'crashed';
+    const next: AgentStatus = this.explicitlyKilled ? 'exited' : code === 0 ? 'exited' : 'crashed';
     this.setStatus(next);
     this.emit('exit', code);
   }

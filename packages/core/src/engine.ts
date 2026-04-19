@@ -253,7 +253,8 @@ export class Engine {
     switch (action.kind) {
       case 'send': {
         const targets = this.targetsOf(action.target);
-        for (const id of targets) await this.sendToAgent(id, action.text, action.appendNewline ?? false);
+        for (const id of targets)
+          await this.sendToAgent(id, action.text, action.appendNewline ?? false);
         return;
       }
       case 'broadcast': {
@@ -317,9 +318,14 @@ export class Engine {
   }
 }
 
+// Strip CSI escape sequences (ESC `[` … letter) so the rolling tail buffer
+// holds plain text suitable for status-bar previews. Built via RegExp so the
+// ESC byte stays out of the source code (biome flags control chars in regex
+// literals).
+const ANSI_CSI_PATTERN = new RegExp(`${String.fromCharCode(0x1b)}\\[[0-9;?]*[A-Za-z]`, 'g');
+
 function pushTail(state: AgentRuntimeState, chunk: string): void {
-  // Maintain only the last few stripped lines for cheap status preview.
-  const stripped = chunk.replace(/\x1b\[[0-9;?]*[A-Za-z]/g, '').replace(/\r/g, '');
+  const stripped = chunk.replace(ANSI_CSI_PATTERN, '').replace(/\r/g, '');
   for (const line of stripped.split('\n')) {
     if (line.length === 0) continue;
     state.lastLines.push(line);

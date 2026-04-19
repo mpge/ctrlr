@@ -1,6 +1,7 @@
-import { Box, useApp, useInput, useStdout } from 'ink';
-import React, { useEffect, useMemo, useReducer, useRef } from 'react';
 import type { AgentRuntimeState } from '@ctrlr/types';
+import { Box, useApp, useInput, useStdout } from 'ink';
+import type React from 'react';
+import { useEffect, useMemo, useReducer, useRef } from 'react';
 import { cellSize, computeGrid } from '../layout.js';
 import { VirtualScreen } from '../virtual-screen.js';
 import { PaneCell } from './PaneCell.js';
@@ -153,7 +154,8 @@ export const App: React.FC<Props> = ({ engine }) => {
     <Box flexDirection="column">
       <Box flexDirection="column">
         {cellRows.map((row, r) => (
-          <Box key={r} flexDirection="row">
+          // biome-ignore lint/suspicious/noArrayIndexKey: rows are positional in the grid
+          <Box key={`grid-row-${r}`} flexDirection="row">
             {row.map((agent) => {
               const screen = screensRef.current.get(agent.spec.id);
               const snap = screen ? screen.snapshot() : [];

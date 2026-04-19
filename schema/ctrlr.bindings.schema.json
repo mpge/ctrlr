@@ -52,7 +52,11 @@
   "definitions": {
     "target": {
       "oneOf": [
-        { "type": "object", "required": ["mode"], "properties": { "mode": { "const": "focused" } } },
+        {
+          "type": "object",
+          "required": ["mode"],
+          "properties": { "mode": { "const": "focused" } }
+        },
         {
           "type": "object",
           "required": ["mode", "agent"],
@@ -111,7 +115,11 @@
             "appendNewline": { "type": "boolean" }
           }
         },
-        { "type": "object", "required": ["kind"], "properties": { "kind": { "const": "stop_all" } } },
+        {
+          "type": "object",
+          "required": ["kind"],
+          "properties": { "kind": { "const": "stop_all" } }
+        },
         {
           "type": "object",
           "required": ["kind", "agent"],

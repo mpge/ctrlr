@@ -1,5 +1,5 @@
 import net from 'node:net';
-import { ipcResponse, type IpcRequest, type IpcResponse } from './messages.js';
+import { type IpcRequest, type IpcResponse, ipcResponse } from './messages.js';
 
 export async function ipcCall(endpoint: string, request: IpcRequest): Promise<IpcResponse> {
   return await new Promise((resolve, reject) => {

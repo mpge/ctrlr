@@ -2,7 +2,7 @@ import { mkdir, rm } from 'node:fs/promises';
 import net, { type Server, type Socket } from 'node:net';
 import path from 'node:path';
 import type { Engine } from '@ctrlr/core';
-import { ipcRequest, type IpcResponse } from './messages.js';
+import { type IpcResponse, ipcRequest } from './messages.js';
 
 export interface IpcServerOptions {
   endpoint: string;
@@ -39,8 +39,9 @@ function handleConnection(socket: Socket, engine: Engine): void {
   socket.setEncoding('utf8');
   socket.on('data', (chunk: string) => {
     buffer += chunk;
-    let idx: number;
-    while ((idx = buffer.indexOf('\n')) >= 0) {
+    for (;;) {
+      const idx = buffer.indexOf('\n');
+      if (idx < 0) break;
       const line = buffer.slice(0, idx);
       buffer = buffer.slice(idx + 1);
       void respond(socket, line, engine);

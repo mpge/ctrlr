@@ -1,6 +1,6 @@
 import type { ButtonName } from '@ctrlr/types';
 import { normalizeAxisI8 } from '../deadzone.js';
-import { type ControllerParser, emptyState, type ParsedState } from './types.js';
+import { type ControllerParser, type ParsedState, emptyState } from './types.js';
 
 /**
  * Best-effort fallback for unknown gamepads that follow the rough HID

@@ -3,12 +3,15 @@
   "version": 1,
   "name": "Dev server trio",
   "buttons": {
-    "A":     { "label": "API",  "action": { "kind": "focus", "agent": "api" } },
-    "B":     { "label": "Web",  "action": { "kind": "focus", "agent": "web" } },
-    "X":     { "label": "DB",   "action": { "kind": "focus", "agent": "db"  } },
-    "LB":    { "label": "prev", "action": { "kind": "cycle_focus", "direction": "prev" } },
-    "RB":    { "label": "next", "action": { "kind": "cycle_focus", "direction": "next" } },
-    "BACK":  { "label": "stop all", "action": { "kind": "stop_all" } },
-    "START": { "label": "restart focused", "action": { "kind": "restart", "target": { "mode": "focused" } } }
+    "A": { "label": "API", "action": { "kind": "focus", "agent": "api" } },
+    "B": { "label": "Web", "action": { "kind": "focus", "agent": "web" } },
+    "X": { "label": "DB", "action": { "kind": "focus", "agent": "db" } },
+    "LB": { "label": "prev", "action": { "kind": "cycle_focus", "direction": "prev" } },
+    "RB": { "label": "next", "action": { "kind": "cycle_focus", "direction": "next" } },
+    "BACK": { "label": "stop all", "action": { "kind": "stop_all" } },
+    "START": {
+      "label": "restart focused",
+      "action": { "kind": "restart", "target": { "mode": "focused" } }
+    }
   }
 }

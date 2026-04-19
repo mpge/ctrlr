@@ -13,7 +13,9 @@ import { ipcEndpoint, pidFile, runtimeDir } from '../runtime-paths.js';
 export function registerStartCommand(program: Command): void {
   program
     .command('start')
-    .description('Launch the Ctrlr TUI: spawns every configured agent and listens for controller input')
+    .description(
+      'Launch the Ctrlr TUI: spawns every configured agent and listens for controller input',
+    )
     .option('--no-controller', 'Skip controller detection (keyboard only)')
     .option('--no-ipc', 'Skip the local IPC server (used by `ctrlr send` and `ctrlr stop`)')
     .action(async (options: { controller: boolean; ipc: boolean }) => {
@@ -27,7 +29,9 @@ export function registerStartCommand(program: Command): void {
         ),
       );
 
-      const controllers = new ControllerManager();
+      const controllers: ControllerManager = options.controller
+        ? new ControllerManager()
+        : (noopManager() as unknown as ControllerManager);
       controllers.on('error', (err) => {
         // Surface but don't crash; the TUI keeps running keyboard-only.
         process.stderr.write(`controller error: ${err.message}\n`);
@@ -40,11 +44,6 @@ export function registerStartCommand(program: Command): void {
         { controllers, paneHost },
       );
 
-      if (!options.controller) {
-        // Replace the manager with a no-op so it never opens any HID device.
-        engine['deps'].controllers = noopManager() as unknown as ControllerManager;
-      }
-
       await mkdir(runtimeDir(cwd), { recursive: true });
       await writeFile(pidFile(cwd), String(process.pid), 'utf8');
 
@@ -53,7 +52,11 @@ export function registerStartCommand(program: Command): void {
         try {
           ipcServer = await startIpcServer({ endpoint: ipcEndpoint(cwd), engine });
         } catch (err) {
-          console.error(chalk.yellow('warning:'), 'failed to start IPC server:', (err as Error).message);
+          console.error(
+            chalk.yellow('warning:'),
+            'failed to start IPC server:',
+            (err as Error).message,
+          );
         }
       }
 

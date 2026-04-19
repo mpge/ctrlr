@@ -1,3 +1,4 @@
+import { EventEmitter } from 'node:events';
 import { defaultBindings } from '@ctrlr/bindings';
 import type {
   AgentSpec,
@@ -8,7 +9,6 @@ import type {
   PaneHost,
   PaneSize,
 } from '@ctrlr/types';
-import { EventEmitter } from 'node:events';
 import { afterEach, describe, expect, it } from 'vitest';
 import { Engine } from './engine.js';
 

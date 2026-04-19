@@ -7,12 +7,7 @@ import type {
 } from '@ctrlr/types';
 import { findKnownDevice } from './known-devices.js';
 import { pickParser } from './parsers/index.js';
-import {
-  type ControllerParser,
-  emptyState,
-  diffState,
-  type ParsedState,
-} from './parsers/types.js';
+import { type ControllerParser, type ParsedState, diffState, emptyState } from './parsers/types.js';
 
 export interface ControllerManagerOptions {
   /** Polling interval (ms) for device discovery. Default 2000. */

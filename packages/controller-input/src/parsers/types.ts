@@ -1,9 +1,4 @@
-import type {
-  ButtonName,
-  ControllerEvent,
-  ControllerVendor,
-  StickName,
-} from '@ctrlr/types';
+import type { ButtonName, ControllerEvent, ControllerVendor, StickName } from '@ctrlr/types';
 
 export interface ParsedState {
   buttons: Partial<Record<ButtonName, boolean>>;

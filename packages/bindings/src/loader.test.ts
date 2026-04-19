@@ -19,7 +19,11 @@ describe('loadBindings', () => {
     tmpDir = await mkdtemp(path.join(os.tmpdir(), 'ctrlr-bind-'));
     const env = process.env;
     const cloned = { ...env, HOME: tmpDir };
+    // Removing rather than setting to undefined so the keys actually leave the
+    // env — `process.env` ignores `undefined` assignments.
+    // biome-ignore lint/performance/noDelete: see comment above
     delete cloned.XDG_CONFIG_HOME;
+    // biome-ignore lint/performance/noDelete: see comment above
     delete cloned.APPDATA;
     process.env = cloned;
     try {

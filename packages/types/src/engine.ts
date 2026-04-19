@@ -6,7 +6,7 @@ export interface EngineEvents {
   'agent:focus': (state: AgentRuntimeState | null) => void;
   'controller:connect': (controllerId: string) => void;
   'controller:disconnect': (controllerId: string) => void;
-  'action': (description: string) => void;
+  action: (description: string) => void;
 }
 
 export interface EngineSnapshot {

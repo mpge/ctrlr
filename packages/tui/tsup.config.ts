@@ -7,6 +7,9 @@ export default defineConfig({
   sourcemap: true,
   clean: true,
   target: 'node20',
-  external: ['react', 'ink', '@xterm/headless'],
+  external: ['react', 'react/jsx-runtime', 'ink', '@xterm/headless'],
   loader: { '.tsx': 'tsx' },
+  esbuildOptions(options) {
+    options.jsx = 'automatic';
+  },
 });

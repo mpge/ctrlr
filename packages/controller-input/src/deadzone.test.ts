@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { applyDeadzone, normalizeAxisI16LE, normalizeAxisI8 } from './deadzone.js';
+import { applyDeadzone, normalizeAxisI8, normalizeAxisI16LE } from './deadzone.js';
 
 describe('applyDeadzone', () => {
   it('zeroes movement inside the radial deadzone', () => {

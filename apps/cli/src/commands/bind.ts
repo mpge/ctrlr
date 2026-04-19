@@ -1,7 +1,7 @@
 import path from 'node:path';
 import { describeAction, loadBindings, saveBindings } from '@ctrlr/bindings';
 import { ControllerManager } from '@ctrlr/controller-input';
-import { BUTTON_NAMES, type Action, type ButtonName } from '@ctrlr/types';
+import { type Action, BUTTON_NAMES, type ButtonName } from '@ctrlr/types';
 import { confirm, input, select } from '@inquirer/prompts';
 import chalk from 'chalk';
 import type { Command } from 'commander';
@@ -108,7 +108,6 @@ async function pickAction(button: ButtonName): Promise<Action> {
       return { kind: 'interrupt', target: { mode: 'focused' } };
     case 'restart':
       return { kind: 'restart', target: { mode: 'focused' } };
-    case 'noop':
     default:
       return { kind: 'noop' };
   }

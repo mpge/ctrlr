@@ -11,36 +11,31 @@ export function registerSendCommand(program: Command): void {
     .option('--all', 'Send to every agent', false)
     .option('--no-newline', 'Do not append a newline')
     .argument('<text...>', 'Text to send')
-    .action(
-      async (
-        text: string[],
-        options: { agent?: string; all: boolean; newline: boolean },
-      ) => {
-        if (!options.agent && !options.all) {
-          throw new Error('Specify --agent <id> or --all');
-        }
-        const payload = text.join(' ');
-        try {
-          const resp = await ipcCall(ipcEndpoint(), {
-            kind: 'send',
-            agent: options.all ? null : (options.agent ?? null),
-            text: payload,
-            appendNewline: options.newline,
-          });
-          if (resp.ok) {
-            console.log(chalk.green('✓'), resp.message);
-          } else {
-            console.error(chalk.red('✗'), resp.message);
-            process.exitCode = 1;
-          }
-        } catch (err) {
-          console.error(
-            chalk.red('✗'),
-            'no running session — start one with `ctrlr start` first.',
-            `(${(err as Error).message})`,
-          );
+    .action(async (text: string[], options: { agent?: string; all: boolean; newline: boolean }) => {
+      if (!options.agent && !options.all) {
+        throw new Error('Specify --agent <id> or --all');
+      }
+      const payload = text.join(' ');
+      try {
+        const resp = await ipcCall(ipcEndpoint(), {
+          kind: 'send',
+          agent: options.all ? null : (options.agent ?? null),
+          text: payload,
+          appendNewline: options.newline,
+        });
+        if (resp.ok) {
+          console.log(chalk.green('✓'), resp.message);
+        } else {
+          console.error(chalk.red('✗'), resp.message);
           process.exitCode = 1;
         }
-      },
-    );
+      } catch (err) {
+        console.error(
+          chalk.red('✗'),
+          'no running session — start one with `ctrlr start` first.',
+          `(${(err as Error).message})`,
+        );
+        process.exitCode = 1;
+      }
+    });
 }

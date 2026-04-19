@@ -1,6 +1,6 @@
-import { Box, Text } from 'ink';
-import React from 'react';
 import type { AgentRuntimeState } from '@ctrlr/types';
+import { Box, Text } from 'ink';
+import type React from 'react';
 
 interface Props {
   agent: AgentRuntimeState;
@@ -47,7 +47,8 @@ export const PaneCell: React.FC<Props> = ({ agent, focused, width, height, rows 
         {Array.from({ length: height - 1 }).map((_, i) => {
           const text = (rows[i] ?? '').padEnd(width).slice(0, width);
           return (
-            <Text key={i} wrap="truncate-end">
+            // biome-ignore lint/suspicious/noArrayIndexKey: row index is the natural key
+            <Text key={`row-${i}`} wrap="truncate-end">
               {text}
             </Text>
           );

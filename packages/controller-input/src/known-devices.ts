@@ -24,13 +24,33 @@ export const KNOWN_DEVICES: KnownDevice[] = [
   { vendorId: 0x045e, productId: 0x02e3, vendor: 'xbox', product: 'Xbox One Elite Controller' },
   { vendorId: 0x045e, productId: 0x02ea, vendor: 'xbox', product: 'Xbox One S Controller' },
   { vendorId: 0x045e, productId: 0x02fd, vendor: 'xbox', product: 'Xbox One S Controller (BT)' },
-  { vendorId: 0x045e, productId: 0x0b00, vendor: 'xbox', product: 'Xbox Elite Controller Series 2' },
-  { vendorId: 0x045e, productId: 0x0b12, vendor: 'xbox', product: 'Xbox Wireless Controller (Series X|S)' },
-  { vendorId: 0x045e, productId: 0x0b13, vendor: 'xbox', product: 'Xbox Wireless Controller (Series X|S, BT)' },
+  {
+    vendorId: 0x045e,
+    productId: 0x0b00,
+    vendor: 'xbox',
+    product: 'Xbox Elite Controller Series 2',
+  },
+  {
+    vendorId: 0x045e,
+    productId: 0x0b12,
+    vendor: 'xbox',
+    product: 'Xbox Wireless Controller (Series X|S)',
+  },
+  {
+    vendorId: 0x045e,
+    productId: 0x0b13,
+    vendor: 'xbox',
+    product: 'Xbox Wireless Controller (Series X|S, BT)',
+  },
   // Sony / PlayStation
   { vendorId: 0x054c, productId: 0x05c4, vendor: 'playstation', product: 'DualShock 4' },
   { vendorId: 0x054c, productId: 0x09cc, vendor: 'playstation', product: 'DualShock 4 (v2)' },
-  { vendorId: 0x054c, productId: 0x0ba0, vendor: 'playstation', product: 'DualShock 4 USB Wireless Adapter' },
+  {
+    vendorId: 0x054c,
+    productId: 0x0ba0,
+    vendor: 'playstation',
+    product: 'DualShock 4 USB Wireless Adapter',
+  },
   { vendorId: 0x054c, productId: 0x0ce6, vendor: 'playstation', product: 'DualSense' },
   { vendorId: 0x054c, productId: 0x0df2, vendor: 'playstation', product: 'DualSense Edge' },
   // Nintendo (treated as generic for now)

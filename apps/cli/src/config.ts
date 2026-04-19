@@ -7,7 +7,10 @@ import { z } from 'zod';
 export const CONFIG_FILENAME = 'ctrlr.config.json';
 
 const agentSpec = z.object({
-  id: z.string().min(1).regex(/^[a-z0-9][a-z0-9_-]*$/i, 'lowercase alphanumeric, dashes, underscores'),
+  id: z
+    .string()
+    .min(1)
+    .regex(/^[a-z0-9][a-z0-9_-]*$/i, 'lowercase alphanumeric, dashes, underscores'),
   label: z.string().min(1),
   command: z.string().min(1),
   args: z.array(z.string()).optional(),
