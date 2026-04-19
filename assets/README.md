@@ -13,9 +13,17 @@ Brand assets for Ctrlr.
 
 ## Drop-in instructions
 
-The repository ships with placeholders. To install the real assets, save the
-official PNG into `assets/logo.png`. Anything that consumes the logo (the
-README, the marketing site, the Tauri app icon) reads from this directory.
+The README hero (`README.md` → `<img src="assets/logo.png">`) loads from this
+directory, so:
+
+1. Save the source PNG as `assets/logo.png` (any aspect ratio works; the
+   README scales it to 280px wide).
+2. `git add assets/logo.png && git commit -m "assets: add brand logo"`
+3. Push.
+
+The TUI splash (`packages/tui/src/components/Splash.tsx`) renders an ASCII
+version of the same lockup with a pink → cyan gradient — that's what users see
+inside the terminal where a PNG can't go.
 
 ## Palette
 

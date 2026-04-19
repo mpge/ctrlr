@@ -1,5 +1,4 @@
 import { render } from 'ink';
-import React from 'react';
 import { App, type AppEngine } from './components/App.js';
 
 export interface TuiBindingsHint {
@@ -14,6 +13,8 @@ export interface TuiOptions {
   /** Override the keyboard input source. Defaults to process.stdin. */
   stdin?: NodeJS.ReadStream;
   exitOnCtrlC?: boolean;
+  /** Skip the boot splash. */
+  skipSplash?: boolean;
 }
 
 export interface TuiHandle {
@@ -24,7 +25,7 @@ export interface TuiHandle {
 }
 
 export function renderTui(options: TuiOptions): TuiHandle {
-  const instance = render(<App engine={options.engine} />, {
+  const instance = render(<App engine={options.engine} skipSplash={options.skipSplash} />, {
     stdout: options.stdout,
     stdin: options.stdin,
     exitOnCtrlC: options.exitOnCtrlC ?? false,

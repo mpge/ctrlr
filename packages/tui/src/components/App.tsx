@@ -1,10 +1,11 @@
 import type { AgentRuntimeState } from '@ctrlr/types';
 import { Box, useApp, useInput, useStdout } from 'ink';
 import type React from 'react';
-import { useEffect, useMemo, useReducer, useRef } from 'react';
+import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from 'react';
 import { cellSize, computeGrid } from '../layout.js';
 import { VirtualScreen } from '../virtual-screen.js';
 import { PaneCell } from './PaneCell.js';
+import { Splash } from './Splash.js';
 import { StatusBar } from './StatusBar.js';
 
 export interface AppEngine {
@@ -33,12 +34,18 @@ export interface AppEngine {
 
 interface Props {
   engine: AppEngine;
+  /** Skip the splash screen entirely. Useful for tests. */
+  skipSplash?: boolean;
+  /** Override splash dwell time. Default 900ms. */
+  splashMinDurationMs?: number;
 }
 
-export const App: React.FC<Props> = ({ engine }) => {
+export const App: React.FC<Props> = ({ engine, skipSplash = false, splashMinDurationMs }) => {
   const { exit } = useApp();
   const { stdout } = useStdout();
   const [, force] = useReducer((n: number) => n + 1, 0);
+  const [splashDone, setSplashDone] = useState(skipSplash);
+  const handleSplashDismiss = useCallback(() => setSplashDone(true), []);
 
   const screensRef = useRef(new Map<string, VirtualScreen>());
   const messageRef = useRef<string | null>(null);
@@ -148,6 +155,16 @@ export const App: React.FC<Props> = ({ engine }) => {
   const cellRows: AgentRuntimeState[][] = [];
   for (let r = 0; r < grid.rows; r++) {
     cellRows.push(agents.slice(r * grid.cols, r * grid.cols + grid.cols));
+  }
+
+  if (!splashDone) {
+    return (
+      <Splash
+        minDurationMs={splashMinDurationMs}
+        ready={agents.length > 0}
+        onDismiss={handleSplashDismiss}
+      />
+    );
   }
 
   return (
