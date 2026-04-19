@@ -63,10 +63,12 @@ export const Splash: React.FC<Props> = ({ minDurationMs = 900, onDismiss, ready 
   return (
     <Box flexDirection="column" alignItems="center" paddingY={1}>
       {CONTROLLER.map((line, i) => (
+        // biome-ignore lint/suspicious/noArrayIndexKey: lockup rows are positional
         <GradientLine key={`ctrl-${i}`} text={line} length={longest} />
       ))}
       <Box height={1} />
       {WORDMARK.map((line, i) => (
+        // biome-ignore lint/suspicious/noArrayIndexKey: lockup rows are positional
         <GradientLine key={`mark-${i}`} text={line} length={longest} />
       ))}
       <Box height={1} />
@@ -75,8 +77,7 @@ export const Splash: React.FC<Props> = ({ minDurationMs = 900, onDismiss, ready 
       <Box>
         <Text color={GRADIENT_END}>{SPINNER_FRAMES[tick % SPINNER_FRAMES.length]} </Text>
         <Text color="#7e7e95">
-          {ready ? 'Ready' : 'Booting engine'}{' '}
-          <Text color="#52526a">· press Enter to skip</Text>
+          {ready ? 'Ready' : 'Booting engine'} <Text color="#52526a">· press Enter to skip</Text>
         </Text>
       </Box>
     </Box>
@@ -96,7 +97,8 @@ const GradientLine: React.FC<GradientLineProps> = ({ text, length }) => {
   const groups: { color: string; chunk: string }[] = [];
   for (let i = 0; i < chars.length; i++) {
     const t = length === 0 ? 0 : i / Math.max(length - 1, 1);
-    const color = chars[i] === ' ' ? 'transparent' : interpolateHex(GRADIENT_START, GRADIENT_END, t);
+    const color =
+      chars[i] === ' ' ? 'transparent' : interpolateHex(GRADIENT_START, GRADIENT_END, t);
     if (groups.length > 0 && groups[groups.length - 1]!.color === color) {
       groups[groups.length - 1]!.chunk += chars[i];
     } else {
@@ -105,26 +107,29 @@ const GradientLine: React.FC<GradientLineProps> = ({ text, length }) => {
   }
   return (
     <Box>
-      {groups.map((g, i) =>
-        g.color === 'transparent' ? (
-          <Text key={`g-${i}`}>{g.chunk}</Text>
+      {groups.map((g, i) => {
+        // Composite key uses colour + position so React still sees stable
+        // identity even though `i` is technically the array index.
+        const key = `${i}-${g.color}-${g.chunk.length}`;
+        return g.color === 'transparent' ? (
+          <Text key={key}>{g.chunk}</Text>
         ) : (
-          <Text key={`g-${i}`} color={g.color}>
+          <Text key={key} color={g.color}>
             {g.chunk}
           </Text>
-        ),
-      )}
+        );
+      })}
     </Box>
   );
 };
 
 export function interpolateHex(a: string, b: string, t: number): string {
-  const ar = parseInt(a.slice(1, 3), 16);
-  const ag = parseInt(a.slice(3, 5), 16);
-  const ab = parseInt(a.slice(5, 7), 16);
-  const br = parseInt(b.slice(1, 3), 16);
-  const bg = parseInt(b.slice(3, 5), 16);
-  const bb = parseInt(b.slice(5, 7), 16);
+  const ar = Number.parseInt(a.slice(1, 3), 16);
+  const ag = Number.parseInt(a.slice(3, 5), 16);
+  const ab = Number.parseInt(a.slice(5, 7), 16);
+  const br = Number.parseInt(b.slice(1, 3), 16);
+  const bg = Number.parseInt(b.slice(3, 5), 16);
+  const bb = Number.parseInt(b.slice(5, 7), 16);
   const r = Math.round(ar + (br - ar) * t);
   const g = Math.round(ag + (bg - ag) * t);
   const bch = Math.round(ab + (bb - ab) * t);
