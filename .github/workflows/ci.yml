@@ -49,6 +49,12 @@ jobs:
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
-      - run: pnpm typecheck
+      # `pnpm build` runs `tsup --dts`, which is itself a `tsc --noEmit` pass.
+      # Running `pnpm typecheck` separately fails on a cold workspace because
+      # tsc resolves `@ctrlr/*` via each package's `types` field (`./dist/...`),
+      # which doesn't exist until build emits it. Build first; cross-package
+      # typecheck happens implicitly during DTS emit. The standalone
+      # `pnpm typecheck` is still useful in dev — just run it after a build.
       - run: pnpm build
+      - run: pnpm typecheck
       - run: pnpm test
