@@ -1,16 +1,20 @@
 import { Box, Text, useInput } from 'ink';
 import { useEffect, useState } from 'react';
 
-const CONTROLLER = [
-  '     ╭━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╮     ',
-  '   ╭━╯   ┌─┐         ┌────────┐         ╰━╮  ',
-  '  │     ─┤ ├─        │  > _   │      ◯    │ ',
-  '  │      └─┘         │        │    ◯   ◯  │ ',
-  '   ╰━╮               └────────┘      ◯    ╭━╯',
-  '     ╰━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╯     ',
+// All ASCII art is padded to the longest row at module load (`padToWidth`),
+// so rows below don't have to count whitespace by hand to stay aligned.
+const CONTROLLER_RAW = [
+  '       ╭───────────────────────────────────────╮       ',
+  '     ╭─╯                                         ╰─╮     ',
+  '    │       ╷           ┌──────────┐         ◯       │    ',
+  '    │     ──┼──          │   > _    │      ◯     ◯    │    ',
+  '    │       ╵           └──────────┘         ◯       │    ',
+  '     ╰─╮                                         ╭─╯     ',
+  '       ╰─────────────╮              ╭─────────────╯       ',
+  '                     ╰──────────────╯                     ',
 ];
 
-const WORDMARK = [
+const WORDMARK_RAW = [
   ' ██████╗████████╗██████╗ ██╗     ██████╗ ',
   '██╔════╝╚══██╔══╝██╔══██╗██║     ██╔══██╗',
   '██║        ██║   ██████╔╝██║     ██████╔╝',
@@ -18,6 +22,17 @@ const WORDMARK = [
   '╚██████╗   ██║   ██║  ██║███████╗██║  ██║',
   ' ╚═════╝   ╚═╝   ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝',
 ];
+
+const padToWidth = (lines: string[]): string[] => {
+  const max = Math.max(...lines.map((l) => [...l].length));
+  return lines.map((l) => {
+    const len = [...l].length;
+    return len < max ? l + ' '.repeat(max - len) : l;
+  });
+};
+
+export const CONTROLLER = padToWidth(CONTROLLER_RAW);
+export const WORDMARK = padToWidth(WORDMARK_RAW);
 
 const TAGLINE = 'C O N T R O L   Y O U R   A I   A G E N T S';
 
@@ -58,7 +73,12 @@ export const Splash: React.FC<Props> = ({ minDurationMs = 900, onDismiss, ready 
     if ((minDone && ready) || skipped) onDismiss?.();
   }, [minDone, ready, skipped, onDismiss]);
 
-  const longest = Math.max(...WORDMARK.map((l) => l.length));
+  // After padding both arrays to their own row width, take the max of the two
+  // so the gradient lerps over the full visual span of either lockup.
+  const longest = Math.max(
+    ...CONTROLLER.map((l) => [...l].length),
+    ...WORDMARK.map((l) => [...l].length),
+  );
 
   return (
     <Box flexDirection="column" alignItems="center" paddingY={1}>

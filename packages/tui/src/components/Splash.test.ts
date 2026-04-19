@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { interpolateHex } from './Splash.js';
+import { CONTROLLER, WORDMARK, interpolateHex } from './Splash.js';
 
 describe('interpolateHex', () => {
   it('returns the start colour at t=0', () => {
@@ -19,5 +19,17 @@ describe('interpolateHex', () => {
   it('clamps within the [0,1] colour space (no out-of-range bytes)', () => {
     const colour = interpolateHex('#000000', '#ffffff', 0.7);
     expect(colour).toMatch(/^#[0-9a-f]{6}$/);
+  });
+});
+
+describe('lockup geometry', () => {
+  it('CONTROLLER rows are all the same character width', () => {
+    const widths = new Set(CONTROLLER.map((l) => [...l].length));
+    expect(widths.size).toBe(1);
+  });
+
+  it('WORDMARK rows are all the same character width', () => {
+    const widths = new Set(WORDMARK.map((l) => [...l].length));
+    expect(widths.size).toBe(1);
   });
 });
