@@ -1,0 +1,44 @@
+{
+  "name": "@ctrlr/cli",
+  "version": "0.1.0",
+  "description": "Ctrlr command-line: control your AI agents like a game controller.",
+  "license": "MIT",
+  "author": "mpge",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mpge/ctrlr.git",
+    "directory": "apps/cli"
+  },
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "ctrlr": "./dist/index.js"
+  },
+  "files": ["dist", "README.md"],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "start": "node ./dist/index.js"
+  },
+  "dependencies": {
+    "@ctrlr/bindings": "workspace:*",
+    "@ctrlr/controller-input": "workspace:*",
+    "@ctrlr/core": "workspace:*",
+    "@ctrlr/pane-host": "workspace:*",
+    "@ctrlr/tui": "workspace:*",
+    "@ctrlr/types": "workspace:*",
+    "@inquirer/prompts": "^7.0.0",
+    "chalk": "^5.3.0",
+    "commander": "^12.1.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.5",
+    "tsup": "^8.3.0",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.2"
+  }
+}
