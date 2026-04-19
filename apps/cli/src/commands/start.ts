@@ -1,5 +1,4 @@
 import { mkdir, writeFile } from 'node:fs/promises';
-import path from 'node:path';
 import { loadBindings } from '@ctrlr/bindings';
 import { ControllerManager } from '@ctrlr/controller-input';
 import { Engine } from '@ctrlr/core';
@@ -111,9 +110,4 @@ async function rmIfExists(p: string): Promise<void> {
   } catch {
     /* ignore */
   }
-}
-
-function _resolveBindingsPath(cwd: string, configBindings?: string): string | undefined {
-  if (!configBindings) return undefined;
-  return path.resolve(cwd, configBindings);
 }

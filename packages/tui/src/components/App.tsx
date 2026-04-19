@@ -110,14 +110,13 @@ export const App: React.FC<Props> = ({ engine }) => {
     [engine],
   );
 
-  useInput(async (input, key) => {
+  useInput((input, key) => {
     if (key.ctrl && (input === 'q' || input === 'c')) {
-      await engine.shutdown();
-      exit();
+      void Promise.resolve(engine.shutdown()).then(() => exit());
       return;
     }
     if (key.ctrl && input === 'r') {
-      await engine.restartFocused();
+      void Promise.resolve(engine.restartFocused());
       return;
     }
     if (key.ctrl && input === 'n') {
